@@ -2,6 +2,7 @@ import argparse
 import pytorch_lightning as pl
 
 from data import MNISTDataModule
+from data import Cifar10DataModule
 from perceiver import LitImageClassifier
 from train.utils import (
     model_checkpoint_callback,
@@ -10,8 +11,8 @@ from train.utils import (
 
 
 def main(args: argparse.Namespace):
-    data_module = MNISTDataModule.create(args)
-
+    # data_module = MNISTDataModule.create(args)
+    data_module = Cifar10DataModule.create(args)
     model = LitImageClassifier(args,
                                image_shape=data_module.dims,
                                num_classes=data_module.num_classes)
