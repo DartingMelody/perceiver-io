@@ -3,6 +3,7 @@ import pytorch_lightning as pl
 
 from data import MNISTDataModule
 from data import Cifar10DataModule
+from data import ImagenetDataModule
 from perceiver import LitImageClassifier
 from train.utils import (
     model_checkpoint_callback,
@@ -12,7 +13,8 @@ from train.utils import (
 
 def main(args: argparse.Namespace):
     # data_module = MNISTDataModule.create(args)
-    data_module = Cifar10DataModule.create(args)
+    # data_module = Cifar10DataModule.create(args)
+    data_module = ImagenetDataModule.create(args)
     model = LitImageClassifier(args,
                                image_shape=data_module.dims,
                                num_classes=data_module.num_classes)
@@ -31,7 +33,8 @@ def main(args: argparse.Namespace):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser = pl.Trainer.add_argparse_args(parser)
-    parser = MNISTDataModule.setup_parser(parser)
+    # parser = MNISTDataModule.setup_parser(parser)
+    parser = ImagenetDataModule.setup_parser(parser)
     parser = LitImageClassifier.setup_parser(parser)
 
     group = parser.add_argument_group('main')
